@@ -9,6 +9,8 @@ require_once("lib/isauthenticated.php");
 if(!isauthenticated())
 	exit("1");
 
+if()
+
 $twitterObj = new EpiTwitter($consumer_key, $consumer_secret, $_COOKIE['oauth_token'], $_COOKIE['oauth_token_secret']);
 $twitterInfo= $twitterObj->get_accountVerify_credentials();
 $result = mysql_query("select id,screen_name from user where screen_name='" . $twitterInfo->screen_name . "' and created_at='" . $twitterInfo->created_at . "' limit 1;");
@@ -16,6 +18,7 @@ $user = mysql_fetch_assoc($result);
 
 //echo "select * from sharelog, followers where followers.userid = " . $user['id'] . " and followers.followerid = sharelog.username;";
 
+if(($_GET['status']) $status = $_GET['status'];
 $unreadMysqlQueryResult = mysql_query("
 	select 
 	latestview.shareid 
@@ -24,8 +27,8 @@ $unreadMysqlQueryResult = mysql_query("
 	where latestview.userid = " . $user['id'] . " limit 1
 	");
 $unreadMysqlQueryRow = mysql_fetch_assoc($unreadMysqlQueryResult);
-
-$result = mysql_query("select sharelog.id,sharelog.page_name,sharelog.page,sharelog.time,sharelog.message,user.screen_name from sharelog, followers, user where followers.userid = " . $user['id'] . " and followers.followerid = sharelog.username and followers.followerid = user.id order by sharelog.id DESC;");
+if($status) $result = mysql_query("select sharelog.id,sharelog.page_name,sharelog.page,sharelog.time,sharelog.message,user.screen_name from sharelog, followers, user where followers.userid = " . $user['id'] . " and followers.followerid = sharelog.username and followers.followerid = user.id order by sharelog.id DESC;");
+else $result = mysql_query("select sharelog.id,sharelog.page_name,sharelog.page,sharelog.time,sharelog.message,user.screen_name from sharelog, followers, user where followers.userid = " . $user['id'] . " and followers.followerid = sharelog.username and followers.followerid = user.id and sharelog.id > " . $unreadMysqlQueryRow['shareid']) . " order by sharelog.id DESC;");
 header('Content-type: application/json');
 $log_entries;
 while($row = mysql_fetch_assoc($result)) {

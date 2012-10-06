@@ -29,6 +29,7 @@ if(!$_COOKIE['oauth_token'] && !$_COOKIE['oauth_token_secret'] && $_GET['oauth_t
 		$row = mysql_fetch_assoc($result);
 		mysql_query("INSERT INTO followers VALUES('','" . $row['id'] . "','1');");
 		mysql_query("INSERT INTO followers VALUES('','" . $row['id'] . "','" . $row['id'] . "');");
+		mysql_query("insert into latestview values('',0," . $row['id'] . ",null);");
 		mysql_close($connection);
 		header("location: congratulations.html");
 	}
