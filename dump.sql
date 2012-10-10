@@ -95,3 +95,12 @@ CREATE TABLE `latestview` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_danish_ci;
+
+CREATE TABLE `latestshareview` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shareid` int(40) COLLATE latin1_danish_ci DEFAULT NULL,
+  `userid` int(40) COLLATE latin1_danish_ci DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_danish_ci;
+

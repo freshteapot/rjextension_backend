@@ -49,7 +49,6 @@ while($row = mysql_fetch_assoc($result)) {
 $lastSeenShare = $log_entries[0];
 $lastSeenShareId = $lastSeenShare['id'];
 
-$CountLatestViewEntriesQueryResult = mysql_query("select count(*) from latestview where");
 $result = mysql_query("select latestview.userid from latestview where userid = " . $user['id'] . ";");
 if(mysql_num_rows($result) > 0)
 	mysql_query("update latestview set shareid = " . $lastSeenShareId . " where userid = " . $user['id']. ";");	
