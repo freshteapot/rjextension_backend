@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once("config.php");
+include_once("../../config.php");
 include_once("inc/twitteroauth.php");
 
 if (isset($_REQUEST['oauth_token']) && $_SESSION['token']  !== $_REQUEST['oauth_token']) {
@@ -20,6 +20,10 @@ if (isset($_REQUEST['oauth_token']) && $_SESSION['token']  !== $_REQUEST['oauth_
 		//redirect user to twitter
 		$_SESSION['status'] = 'verified';
 		$_SESSION['request_vars'] = $access_token;
+		setcookie("request_vars", $access_token);
+		setcookie("token", $access_token['oauth_token']);
+		setcookie("token_secret", $access_token['oauth_token_secret']);
+		setcookie("verifier", $_REQUEST['oauth_verifier']);
 		
 		// unset no longer needed request tokens
 		unset($_SESSION['token']);
@@ -44,6 +48,7 @@ if (isset($_REQUEST['oauth_token']) && $_SESSION['token']  !== $_REQUEST['oauth_
 	//received token info from twitter
 	$_SESSION['token'] 			= $request_token['oauth_token'];
 	$_SESSION['token_secret'] 	= $request_token['oauth_token_secret'];
+	
 	
 	// any value other than 200 is failure, so continue only if http code is 200
 	if($connection->http_code=='200')

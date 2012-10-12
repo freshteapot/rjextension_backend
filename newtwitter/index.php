@@ -1,16 +1,14 @@
 <?php
-//start session
-session_start();
+//start 
 
-//just simple session reset on logout click
+//just simple COOKIE reset on logout click
 if($_GET["reset"]==1)
 {
-	session_destroy();
 	header('Location: ./index.php');
 }
 
 // Include config file and twitter PHP Library by Abraham Williams (abraham@abrah.am)
-include_once("config.php");
+include_once("../../config.php");
 include_once("inc/twitteroauth.php");
 ?>
 <html>
@@ -71,18 +69,18 @@ include_once("inc/twitteroauth.php");
 <div class="wrapper">
 <?php
 
-if(isset($_SESSION['status']) && $_SESSION['status']=='verified') 
+if(isset($_COOKIE['token']) && $_COOKIE['token_secret']) 
 {	//Success, redirected back from process.php with varified status.
-	//retrive variables
-	$screenname 		= $_SESSION['request_vars']['screen_name'];
-	$twitterid 			= $_SESSION['request_vars']['user_id'];
-	$oauth_token 		= $_SESSION['request_vars']['oauth_token'];
-	$oauth_token_secret = $_SESSION['request_vars']['oauth_token_secret'];
+	$oauth_token = $_COOKIE['token'];
+	$oauth_token_secret = $_COOKIE['token_secret'];
+	$oauth_verifier = $_COOKIE['verifier'];
 
 	//Show welcome message
-	echo '<div class="welcome_txt">Welcome <strong>'.$screenname.'</strong> (Twitter ID : '.$twitterid.'). <a href="index.php?reset=1">Logout</a>!</div>';
+	//echo '<div class="welcome_txt">Welcome <strong>'.$screenname.'</strong> (Twitter ID : '.$twitterid.'). <a href="index.php?reset=1">Logout</a>!</div>';
 	$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $oauth_token, $oauth_token_secret);
 	
+	$updates = $connection->get('statuses/user_timeline');
+	print_r($updates);
 	//see if user wants to tweet using form.
 	if(isset($_POST["updateme"])) 
 	{
