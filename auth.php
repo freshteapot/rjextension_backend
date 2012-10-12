@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 include 'authlib/EpiCurl.php';
 include 'authlib/EpiOAuth.php';
 include 'authlib/EpiTwitter.php';
@@ -17,10 +19,11 @@ if(!$_COOKIE['oauth_token'] && !$_COOKIE['oauth_token_secret'] && $_GET['oauth_t
 	$twitterObj->setToken($_GET['oauth_token']);
 	$token = $twitterObj->getAccessToken();
 	$twitterObj->setToken($token->oauth_token, $token->oauth_token_secret);
-	setcookie('oauth_token', $token->oauth_token);
-	setcookie('oauth_token_secret', $token->oauth_token_secret);
+	//setcookie('oauth_token', $token->oauth_token);
+	//setcookie('oauth_token_secret', $token->oauth_token_secret);
 	$twitterInfo= $twitterObj->get_accountVerify_credentials();
-	$result = mysql_query("select id from user where screen_name='" . $twitterInfo->screen_name . "' and created_at='" . $twitterInfo->created_at . "' limit 1;");
+	echo $twitterInfo->screen_name;
+/**	$result = mysql_query("select id from user where screen_name='" . $twitterInfo->screen_name . "' and created_at='" . $twitterInfo->created_at . "' limit 1;");
 	if(mysql_num_rows($result) > 0)
 		header("location: congratulations.html");
 	else {
@@ -33,6 +36,7 @@ if(!$_COOKIE['oauth_token'] && !$_COOKIE['oauth_token_secret'] && $_GET['oauth_t
 		mysql_close($connection);
 		header("location: congratulations.html");
 	}
+	**/
 }
 
 if(!$_COOKIE['oauth_token'] && !$_COOKIE['oauth_token_secret'] && !$_GET['oauth_token']) {

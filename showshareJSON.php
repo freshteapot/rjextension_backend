@@ -9,7 +9,7 @@ require_once("lib/isauthenticated.php");
 if(!isauthenticated())
 	exit("1");
 
-if()
+
 
 $twitterObj = new EpiTwitter($consumer_key, $consumer_secret, $_COOKIE['oauth_token'], $_COOKIE['oauth_token_secret']);
 $twitterInfo= $twitterObj->get_accountVerify_credentials();
