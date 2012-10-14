@@ -1,6 +1,9 @@
 <?php
 function isauthenticated() {
-	if($_COOKIE['oauth_token'] && $_COOKIE['oauth_token_secret'])
+	if(isset($_COOKIE['token']) && isset($_COOKIE['token_secret'])) {
 		return true;
-	return false;	
+	}	
+	else {
+		return false;
+	}	
 }
